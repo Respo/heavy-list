@@ -92,7 +92,7 @@
 
 (deftask rsync []
   (with-pre-wrap fileset
-    (sh "rsync" "-r" "target/" "repo.tiye.me:repo/mvc-works/stack-workflow" "--exclude" "main.out" "--delete")
+    (sh "rsync" "-r" "target/" "respo.site:repo/Respo/heavy-list/" "--exclude" "main.out" "--delete")
     fileset))
 
 (deftask build []

@@ -5,19 +5,29 @@
                                  div
                                  button
                                  h1]]
-            [respo.comp.text :refer [comp-text]]))
+            [respo.comp.text :refer [comp-text]]
+            [stack-workflow.measure :refer [start-measure
+                                            stop-measure]]))
 
-(defn on-run [e dispatch!] (dispatch! :run nil))
+(defn on-run [e dispatch!] (start-measure "run") (dispatch! :run nil))
 
-(defn on-add [e dispatch!] (dispatch! :add nil))
+(defn on-add [e dispatch!] (start-measure "add") (dispatch! :add nil))
 
-(defn on-run-lots [e dispatch!] (dispatch! :run-lots nil))
+(defn on-run-lots [e dispatch!]
+  (start-measure "runLots")
+  (dispatch! :run-lots nil))
 
-(defn on-update [e dispatch!] (dispatch! :update nil))
+(defn on-update [e dispatch!]
+  (start-measure "update")
+  (dispatch! :update nil))
 
-(defn on-swap-rows [e dispatch!] (dispatch! :swap-rows nil))
+(defn on-swap-rows [e dispatch!]
+  (start-measure "swapRows")
+  (dispatch! :swap-rows nil))
 
-(defn on-clear [e dispatch!] (dispatch! :clear nil))
+(defn on-clear [e dispatch!]
+  (start-measure "clear")
+  (dispatch! :clear nil))
 
 (defn div-class [class-name & children]
   (create-element :div {:attrs {:class-name class-name}} children))

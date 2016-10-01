@@ -55,12 +55,14 @@
      (update
        :data
        (fn [old-data]
-         (map-indexed
-           (fn [idx row]
-             (if (zero? (mod idx 10))
-               (update row :label (fn [text] (str text " !!!")))
-               row))
-           old-data))))
+         (->>
+           old-data
+           (map-indexed
+             (fn [idx row]
+               (if (zero? (mod idx 10))
+                 (update row :label (fn [text] (str text " !!!")))
+                 row)))
+           (into [])))))
     :select
     (assoc store :selected op-data)
     :run-lots
@@ -72,7 +74,10 @@
      (update
        :data
        (fn [old-data]
-         (filter (fn [row] (not= (:id row) op-data)) old-data))))
+         (->>
+           old-data
+           (filter (fn [row] (not= (:id row) op-data)))
+           (into [])))))
     :swap-rows
     (-> store
      (update
