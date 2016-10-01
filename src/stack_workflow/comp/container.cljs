@@ -6,7 +6,8 @@
             [respo.comp.space :refer [comp-space]]
             [respo.comp.text :refer [comp-text]]
             [respo.comp.debug :refer [comp-debug]]
-            [stack-workflow.comp.header :refer [comp-header]]))
+            [stack-workflow.comp.header :refer [comp-header]]
+            [stack-workflow.comp.row :refer [comp-row]]))
 
 (defn table [props & children] (create-element :table props children))
 
@@ -17,11 +18,22 @@
     (div
       {:attrs {:class-name "container"}}
       (comp-header)
-      (comp-debug store)
+      (comment comp-debug store)
       (table
         {:attrs
          {:class-name "table table-hover table-striped test-data"}}
-        (tbody {}))
+        (tbody
+          {}
+          (->>
+            (:data store)
+            (map
+              (fn [row-data] [(:id row-data)
+                              (comp-row
+                                row-data
+                                (if
+                                  (= (:id row-data) (:selected store))
+                                  "danger"
+                                  ""))])))))
       (span
         {:attrs
          {:aria-hidden "true",

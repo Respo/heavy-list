@@ -10,6 +10,7 @@
 (defonce store-ref (atom initial-store))
 
 (defn dispatch! [op op-data]
+  (println "op" op op-data)
   (let [new-store (updater @store-ref op op-data)]
     (reset! store-ref new-store)))
 

@@ -44,17 +44,43 @@
   (case
     op
     :run
-    store
-    :add
     (-> store (assoc :selected nil) (assoc :data (build-data 1000)))
+    :add
+    (-> store
+     (update
+       :data
+       (fn [old-data] (into [] (concat old-data (build-data 1000))))))
     :update
-    store
+    (-> store
+     (update
+       :data
+       (fn [old-data]
+         (map-indexed
+           (fn [idx row]
+             (if (zero? (mod idx 10))
+               (update row :label (fn [text] (str text " !!!")))
+               row))
+           old-data))))
     :select
-    store
+    (assoc store :selected op-data)
     :run-lots
-    store
+    (-> store (assoc :selected nil) (assoc :data (build-data 10000)))
     :clear
-    store
+    (-> store (assoc :selected nil) (assoc :data []))
+    :delete
+    (-> store
+     (update
+       :data
+       (fn [old-data]
+         (filter (fn [row] (not= (:id row) op-data)) old-data))))
     :swap-rows
-    store
+    (-> store
+     (update
+       :data
+       (fn [old-data]
+         (if (> (count old-data) 10)
+           (-> old-data
+            (assoc 4 (get old-data 9))
+            (assoc 9 (get old-data 4)))
+           old-data))))
     store))
