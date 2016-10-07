@@ -49,7 +49,7 @@
       "jumbotron"
       (div-class
         "row"
-        (div-class "col-md-6" (h1 {} (comp-text "Respo v0.2.23" nil)))
+        (div-class "col-md-6" (h1 {} (comp-text "Respo v0.2.24" nil)))
         (div-class
           "col-md-6"
           (div-class
