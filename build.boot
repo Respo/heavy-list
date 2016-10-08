@@ -8,7 +8,7 @@
                  [adzerk/boot-test          "1.1.2"       :scope "test"]
                  [mvc-works/hsl             "0.1.2"]
                  [respo/ui                  "0.1.2"]
-                 [respo                     "0.3.24"]])
+                 [respo                     "0.3.25"]])
 
 (require '[adzerk.boot-cljs   :refer [cljs]]
          '[adzerk.boot-reload :refer [reload]]
@@ -86,7 +86,9 @@
   (comp
     (transform-stack :filename "stack-sepal.ir")
     (cljs :optimizations :advanced
-          :compiler-options {:language-in :ecmascript5})
+          :compiler-options {:language-in :ecmascript5
+                             :pseudo-names true
+                             :source-map true})
     (html-file :data {:build? true})
     (target)))
 
